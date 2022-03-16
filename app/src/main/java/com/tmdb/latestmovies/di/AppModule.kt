@@ -3,6 +3,8 @@ package com.tmdb.latestmovies.di
 import com.google.gson.GsonBuilder
 import com.tmdb.latestmovies.common.Constants.BASE_URL
 import com.tmdb.latestmovies.data.remote.MovieApi
+import com.tmdb.latestmovies.data.repository.MovieRepositoryImpl
+import com.tmdb.latestmovies.domain.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,5 +27,11 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(MovieApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRepository(api: MovieApi): MovieRepository {
+        return MovieRepositoryImpl(api)
     }
 }

@@ -15,5 +15,5 @@ interface MovieApi {
     suspend fun getUpComing(@Query("?api_key") key: String, @Query("page") page: Int): Response<MoviesResultDto>
 
     @GET("3/movie/{ID}")
-    suspend fun getMovieDetail(@Query("?api_key") key: String, @Path("ID") page: Int): Response<MovieDetailDto>
+    suspend fun getMovieDetail(@Query("?api_key") key: String, @Path("ID") id: Int): Response<MovieDetailDto>
 }
