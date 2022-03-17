@@ -6,5 +6,13 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="text_black">#2B2D42</color>
+    <color name="pager_end_black">#000</color>
+    <color name="pager_start_gray">#66434343</color>
+    <color name="text_gray">#8D99AE</color>
+    <color name="light_gray">#E9ECEF</color>
+    <color name="dark_gray">#ADB5BD</color>
+    <color name="yellow_imdb">#E6B91E</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="unselected_dot_white">#4DFFFFFF</color>
 </resources>
