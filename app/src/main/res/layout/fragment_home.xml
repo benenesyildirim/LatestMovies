@@ -1,31 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/pull_to_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/now_playing_viewpager"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.33"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/medium_margin"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:layout_marginEnd="@dimen/medium_margin"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/now_playing_viewpager"
-            tools:listitem="@layout/up_coming_row_design" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/now_playing_vp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scrollY="0dp"
+                app:layout_constraintHeight_percent="0.33"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/viewpager_dots"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/tab_dots_height"
+                android:background="#00000000"
+                android:isScrollContainer="false"
+                app:layout_constraintBottom_toBottomOf="@id/now_playing_vp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.25"
+                app:tabBackground="@drawable/viewpager_dot_design"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"
+                app:tabMaxWidth="20dp"
+                app:tabMode="auto" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/up_comings_rv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="300dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/now_playing_vp"
+                tools:listitem="@layout/up_coming_row_design" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

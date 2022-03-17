@@ -15,5 +15,15 @@ class Utils {
                         .into(imageView)
             }
         }
+
+        @BindingAdapter("loadMovieImage")
+        @JvmStatic
+        fun loadMovieImage(imageView: ImageView, imageUrl: String?) {
+            if (!imageUrl.isNullOrEmpty()) {
+                Glide.with(imageView.context)
+                        .load("https://image.tmdb.org/t/p/w500$imageUrl")
+                        .into(imageView)
+            }
+        }
     }
 }

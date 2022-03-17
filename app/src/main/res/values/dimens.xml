@@ -3,4 +3,5 @@
     <dimen name="medium_margin">16dp</dimen>
     <dimen name="small_margin">8dp</dimen>
     <dimen name="x_small_margin">4dp</dimen>
+    <dimen name="tab_dots_height">40dp</dimen>
 </resources>
