@@ -14,7 +14,8 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/now_playing_vp"
             android:layout_width="match_parent"
-            android:layout_height="285dp"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.33"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.tabs.TabLayout
