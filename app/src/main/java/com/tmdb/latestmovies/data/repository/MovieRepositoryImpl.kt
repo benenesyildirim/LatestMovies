@@ -9,5 +9,5 @@ class MovieRepositoryImpl @Inject constructor(private val api: MovieApi) : Movie
 
     override suspend fun getUpComing(key: String, page: Int) = api.getUpComing(key, page)
 
-    override suspend fun getMovieDetail(key: String, id: Int) = api.getMovieDetail(key, id)
+    override suspend fun getMovieDetail(key: String, id: Int) = api.getMovieDetail(id, key)
 }
