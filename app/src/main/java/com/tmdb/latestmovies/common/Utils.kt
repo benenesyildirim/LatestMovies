@@ -3,6 +3,7 @@ package com.tmdb.latestmovies.common
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.tmdb.latestmovies.R
 
 class Utils {
     companion object {
@@ -11,8 +12,8 @@ class Utils {
         fun loadImage(imageView: ImageView, imageUrl: String?) {
             if (!imageUrl.isNullOrEmpty()) {
                 Glide.with(imageView.context)
-                        .load(imageUrl)
-                        .into(imageView)
+                    .load(imageUrl)
+                    .into(imageView)
             }
         }
 
@@ -21,8 +22,9 @@ class Utils {
         fun loadMovieImage(imageView: ImageView, imageUrl: String?) {
             if (!imageUrl.isNullOrEmpty()) {
                 Glide.with(imageView.context)
-                        .load("https://image.tmdb.org/t/p/w500$imageUrl")
-                        .into(imageView)
+                    .load("https://image.tmdb.org/t/p/w500$imageUrl")
+                    .placeholder(R.drawable.cinema_placeholder)
+                    .into(imageView)
             }
         }
     }

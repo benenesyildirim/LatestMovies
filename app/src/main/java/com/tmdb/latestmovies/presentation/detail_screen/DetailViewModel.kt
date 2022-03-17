@@ -7,6 +7,7 @@ import com.tmdb.latestmovies.common.Resource
 import com.tmdb.latestmovies.data.remote.dto.MovieDetailDto
 import com.tmdb.latestmovies.domain.use_case.get_movie.GetMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -26,10 +27,11 @@ class DetailViewModel @Inject constructor(
     val getMovieLiveData: LiveData<Resource<MovieDetailDto>> get() = _getMovieLiveData
 
     private fun getMovieDetail(key: String, id: Int) = viewModelScope.launch {
-        //_getMovieLiveData.postValue(Resource.Loading())
-
         try {
             getMovieUseCase.getMovieDetail(key,id).let {
+                _getMovieLiveData.postValue(Resource.Loading())
+                delay(2000) // Animasyonu gösterebilmek için hard delay atıldı.
+
                 if (it.isSuccessful)
                     _getMovieLiveData.postValue(Resource.Success(it.body()!!))
             }

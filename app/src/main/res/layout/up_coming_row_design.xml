@@ -21,7 +21,6 @@
             android:layout_height="104dp"
             android:layout_margin="@dimen/medium_margin"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_background"
             app:layout_constraintBottom_toTopOf="@id/divider_upcoming"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

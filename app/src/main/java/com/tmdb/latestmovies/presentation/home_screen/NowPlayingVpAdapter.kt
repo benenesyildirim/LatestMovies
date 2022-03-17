@@ -11,8 +11,7 @@ import com.tmdb.latestmovies.R
 import com.tmdb.latestmovies.data.remote.dto.MovieDto
 import com.tmdb.latestmovies.databinding.NowPlayingPagerDesignBinding
 
-
-class NowPlayingVpAdapter(private val movieList: List<MovieDto>) : PagerAdapter() {
+class NowPlayingVpAdapter(private val movieList: List<MovieDto>, val listener: (Int) -> Unit) : PagerAdapter() {
     private var lastPosition: Int = 0
 
     override fun getCount() = movieList.size
@@ -26,6 +25,7 @@ class NowPlayingVpAdapter(private val movieList: List<MovieDto>) : PagerAdapter(
         val binding = NowPlayingPagerDesignBinding.inflate(inflater)
         val view = binding.root
         binding.movie = movieList[position]
+        binding.root.setOnClickListener { listener(movieList[position].id.toInt()) }
 
         val vp = container as ViewPager
         vp.addView(view, 0)

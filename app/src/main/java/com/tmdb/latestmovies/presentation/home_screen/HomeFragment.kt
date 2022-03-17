@@ -3,12 +3,15 @@ package com.tmdb.latestmovies.presentation.home_screen
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tmdb.latestmovies.R
 import com.tmdb.latestmovies.common.Constants.API_KEY
@@ -41,29 +44,28 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeUpComings() {
-        lastPage = 1
         with(viewModel) {
-            getUpComing(API_KEY,lastPage)
             upComingLiveData.observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Resource.Loading -> {
-
+                        binding.homeLoading.visibility = VISIBLE
                     }
                     is Resource.Success -> {
-                        if (lastPage == 1) {
-                            upComingAdapter.setMovies(result.data!!.results)
-                            binding.upComingsRv.scrollToPosition(0)
-                        } else {
-                            upComingAdapter.addMovies(result.data!!.results)
+                        if (lastPage == 1){
+                            upComingAdapter.clearMovies()
                         }
+                        upComingAdapter.addMovies(result.data!!.results)
 
                         totalComplete++
                         if (totalComplete == 2) {
                             totalComplete = 0
                             binding.pullToRefreshLayout.isRefreshing = false
+                            binding.homeLoading.visibility = GONE
                         }
                     }
                     is Resource.Error -> {
+                        binding.homeLoading.visibility = GONE
+
                         Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -73,23 +75,31 @@ class HomeFragment : Fragment() {
 
     private fun observeNowPlayings() {
         with(viewModel) {
-            getNowPlaying(API_KEY)
             nowPlayingLiveData.observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Resource.Loading -> {
-
+                        binding.homeLoading.visibility = VISIBLE
                     }
                     is Resource.Success -> {
-                        binding.nowPlayingVp.adapter = NowPlayingVpAdapter(result.data!!.results)
+                        binding.nowPlayingVp.adapter = NowPlayingVpAdapter(result.data!!.results) {
+                            Navigation.findNavController(binding.root)
+                                .navigate(
+                                    R.id.action_homeFragment_to_detailFragment,
+                                    bundleOf(MOVIE_ID to it)
+                                )
+                        }
                         binding.viewpagerDots.setupWithViewPager(binding.nowPlayingVp)
 
                         totalComplete++
                         if (totalComplete == 2) {
                             totalComplete = 0
                             binding.pullToRefreshLayout.isRefreshing = false
+                            binding.homeLoading.visibility = GONE
                         }
                     }
                     is Resource.Error -> {
+                        binding.homeLoading.visibility = GONE
+
                         Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -106,15 +116,18 @@ class HomeFragment : Fragment() {
                 )
         }
 
-        binding.upComingsRv.apply{
+        binding.upComingsRv.apply {
             adapter = upComingAdapter
-            smoothScrollToPosition(adapter!!.itemCount)
-
+            val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            this.layoutManager = layoutManager
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
-                    if(dy <= 0){
+                    val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
+                    val lastPosition = linearLayoutManager!!.findLastCompletelyVisibleItemPosition()
+                    if (lastPosition == upComingAdapter.itemCount - 1) {
+                        totalComplete = 1
                         lastPage++
                         viewModel.getUpComing(API_KEY, lastPage)
                     }

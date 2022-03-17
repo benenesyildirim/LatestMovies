@@ -16,12 +16,11 @@
 
         <ImageView
             android:id="@+id/poster_now_playing_iv"
-            loadMovieImage="@{movie.poster_path}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:foreground="@drawable/pager_gradient_foreground"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher_background"
+            android:scaleType="centerCrop"
+            loadMovieImage="@{movie.poster_path}"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView

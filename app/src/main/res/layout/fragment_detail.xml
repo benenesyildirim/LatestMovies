@@ -25,7 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_background"
                 app:layout_constraintHeight_percent="0.33"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -129,6 +128,21 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/movie_name_detail_tv"
                 tools:text="Moonrise Kingdom is a 2012 American coming-of-age comedy-drama film." />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/detail_loading"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/panda_popcorn" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

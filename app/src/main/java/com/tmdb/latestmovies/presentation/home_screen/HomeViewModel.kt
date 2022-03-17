@@ -27,11 +27,17 @@ class HomeViewModel @Inject constructor(
     private val _upComingLiveData = MutableLiveData<Resource<MoviesResultDto>>()
     val upComingLiveData: LiveData<Resource<MoviesResultDto>> get() = _upComingLiveData
 
+    init {
+        getNowPlaying(API_KEY)
+        getUpComing(API_KEY,1)
+    }
+
     fun getNowPlaying(key: String) = viewModelScope.launch {
-        //_nowPlayingLiveData.postValue(Resource.Loading())
+        _nowPlayingLiveData.postValue(Resource.Loading())
 
         try {
             nowPlayingUseCase.getNowPlaying(key).let {
+
                 if (it.isSuccessful)
                     _nowPlayingLiveData.postValue(Resource.Success(it.body()!!))
             }
@@ -48,10 +54,11 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getUpComing(key: String, page: Int) = viewModelScope.launch {
-        //_upComingLiveData.postValue(Resource.Loading())
+        _upComingLiveData.postValue(Resource.Loading())
 
         try {
             upComingUseCase.getUpComing(key, page).let {
+
                 if (it.isSuccessful)
                     _upComingLiveData.postValue(Resource.Success(it.body()!!))
             }
