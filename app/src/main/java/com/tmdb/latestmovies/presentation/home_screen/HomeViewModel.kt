@@ -21,18 +21,13 @@ class HomeViewModel @Inject constructor(
     private val upComingUseCase: UpComingUseCase
 ) : ViewModel() {
 
-    init{
-        getNowPlaying(API_KEY)
-        getUpComing(API_KEY,1)
-    }
-
     private val _nowPlayingLiveData = MutableLiveData<Resource<MoviesResultDto>>()
     val nowPlayingLiveData: LiveData<Resource<MoviesResultDto>> get() = _nowPlayingLiveData
 
     private val _upComingLiveData = MutableLiveData<Resource<MoviesResultDto>>()
     val upComingLiveData: LiveData<Resource<MoviesResultDto>> get() = _upComingLiveData
 
-    private fun getNowPlaying(key: String) = viewModelScope.launch {
+    fun getNowPlaying(key: String) = viewModelScope.launch {
         //_nowPlayingLiveData.postValue(Resource.Loading())
 
         try {
@@ -52,7 +47,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getUpComing(key: String, page: Int) = viewModelScope.launch {
+    fun getUpComing(key: String, page: Int) = viewModelScope.launch {
         //_upComingLiveData.postValue(Resource.Loading())
 
         try {

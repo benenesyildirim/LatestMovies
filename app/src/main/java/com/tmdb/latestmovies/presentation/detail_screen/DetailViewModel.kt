@@ -1,10 +1,8 @@
 package com.tmdb.latestmovies.presentation.detail_screen
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.tmdb.latestmovies.common.Constants.API_KEY
+import com.tmdb.latestmovies.common.Constants.MOVIE_ID
 import com.tmdb.latestmovies.common.Resource
 import com.tmdb.latestmovies.data.remote.dto.MovieDetailDto
 import com.tmdb.latestmovies.domain.use_case.get_movie.GetMovieUseCase
@@ -16,11 +14,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val getMovieUseCase: GetMovieUseCase
+    private val getMovieUseCase: GetMovieUseCase,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     init {
-        getMovieDetail(API_KEY,414906)
+        getMovieDetail(API_KEY,savedStateHandle.get<Int>(MOVIE_ID)!!)
     }
 
     private val _getMovieLiveData = MutableLiveData<Resource<MovieDetailDto>>()
